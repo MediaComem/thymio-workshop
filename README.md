@@ -30,9 +30,9 @@ I reverse engineered the notes:
 
 ![Instrument](img/01_sounds.png)
 
-todo: construct a melody with these samples
+todo: construct a melody with these notes
 
-## 01+ Thymio tunes+ Symphony No. 9 (Beethoven)
+## 01b Thymio tunes: Symphony No. 9 (Optional)
 Since this does not use `VPL`, should probably be used as a demonstration.
 
 * Load sounds from `/assets/sounds` onto SD card

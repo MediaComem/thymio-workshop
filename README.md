@@ -10,7 +10,19 @@ Notes for [Crea Code Club](http://codeclub.heig-vd.ch/) [Thymio]() robot worksho
 	* Press middle button while red
 	* Use UP ARROW to max out volume
 
+### Optional
+Prepare a custom SD card with files to make a playable instrument using these [instructions](doc/createSoundFiles.md).
+
 ## Introduction
 * Get them excited
 	* Present Thymio: swiss robot made @EPFL by Francesco Mondada & team
 * Get to know their skills: ask about other workshops they took. Adapt difficulty.
+
+
+## Thymio instrument
+Create an instrument using the `Thymio VPL` software.
+
+
+
+
+

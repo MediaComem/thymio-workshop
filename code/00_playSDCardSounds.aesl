@@ -1,0 +1,31 @@
+<!DOCTYPE aesl-source>
+<network>
+
+
+<!--list of global events-->
+
+
+<!--list of constants-->
+
+
+<!--show keywords state-->
+<keywords flag="true"/>
+
+
+<!--node thymio-II-->
+<node nodeId="26822" name="thymio-II"># Plays sounds off SD card
+
+var i = 0
+var l = 0
+
+onevent prox
+	for i in 0:4 do
+		if prox.horizontal[i]>4000 then
+			l = 32 * (i % 2)
+			call leds.top(l, l, l)
+			call sound.play(i)
+		end
+	end</node>
+
+
+</network>

@@ -15,9 +15,16 @@ Prepare a custom SD card with files to make a playable instrument using these [i
 
 ## Introduction
 * Get them excited
-	* Present Thymio: swiss robot made @EPFL by Francesco Mondada & team
+	* Present Thymio: swiss robot made @EPFL by Francesco Mondada & team (sensors and default modes)
 * Get to know their skills: ask about other workshops they took. Adapt difficulty.
-
+* Explain differences between event-driven and sequential programming
+* Show different robot modes
+	*  Green = friendly: comes close
+	*  Yellow = explorer: advances and avoids obstacles
+	*  Red = fearful: avoids
+	*  Cyan = investigator: follows black line
+	*  Pink = obedient: control with direction buttons
+	*  Blue = attentive: listen to claps 1x, 2x and 3x claps yield different results
 
 ## 01 Thymio tunes
 Create an instrument using the `Thymio VPL` software, like so.
@@ -30,7 +37,15 @@ I reverse engineered the notes:
 
 ![Instrument](img/01_sounds.png)
 
-todo: construct a melody with these notes
+Here is a small melody by Gwen: 
+
+```
+c#4 c#4 E4 G4
+E4  c#5 A4 G4
+E4  c#4 A4
+```
+
+It should sound like [this](doc/GwenThymio.m4a).
 
 ## 01b Thymio tunes: Symphony No. 9 (Optional)
 Since this does not use `VPL`, should probably be used as a demonstration.
@@ -57,6 +72,36 @@ G | 5 | P4.wav
 # 3 3 4 5  5 4 3 2  1 1 2 3   2 1 1
 --------------------------------------
 ```
+
+## 02 Basics
+* Move forward
+* Stop before frontal impact
+* Avoid falling off the table
+* Stop when hit and get angry
+* Move in a circle
+* Turn around itself
+* Move towards the hand
+
+## 03 Friendly behaviour
+
+This already teaches them about motors. 
+Should take some time to add animated behaviours.
+
+They should get to the conclusion that with what they have they can not stop a collision. This is when we should introduce expert mode.
+
+## 04 Line follower behaviour
+1. Just follow lines.
+* Handle traffic
+* Avoid obstacles
+* Stop if somebody in front
+
+## 05 Sound of the police or Learning about State machines
+Explain state machine with advanced mode and police siren. 
+
+
+## 06 Poll booth
+
+`todo: build rebuildable structure`
 
 ## Resources
 

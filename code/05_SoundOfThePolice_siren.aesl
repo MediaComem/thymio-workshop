@@ -1,0 +1,64 @@
+<!DOCTYPE aesl-source>
+<network>
+<node nodeId="56768" name="thymio-II"># variables for state
+var state[4] = [0,0,0,0]
+var new_state[4] = [0,0,0,0]
+
+# reset outputs
+call sound.system(-1)
+call leds.top(0,0,0)
+call leds.bottom.left(0,0,0)
+call leds.bottom.right(0,0,0)
+call leds.circle(0,0,0,0,0,0,0,0)
+
+# subroutine to display the current state
+sub display_state
+	call leds.circle(0,state[1]*32,0,state[3]*32,0,state[2]*32,0,state[0]*32)
+
+onevent prox
+	when prox.ground.delta[0] &lt;= 500 and prox.ground.delta[1] &lt;= 500 do
+		motor.left.target = 100
+		motor.right.target = 100
+		emit pair_run 0
+	end
+
+	when prox.ground.delta[1] >= 525 do
+		motor.left.target = 0
+		motor.right.target = 250
+		emit pair_run 1
+	end
+
+	when prox.ground.delta[0] >= 450 do
+		motor.left.target = 200
+		motor.right.target = 0
+		emit pair_run 2
+	end
+
+<toolsPlugins>
+<ThymioVisualProgramming>
+<vplroot xml-format-version="1">
+<program advanced_mode="1">
+<set>
+<block value0="2" value1="2" value2="500" value3="900" type="event" name="proxground"/>
+<block value0="0" value1="0" value2="0" value3="0" type="state" name="statefilter"/>
+<block value0="100" value1="100" type="action" name="move"/>
+</set>
+<set>
+<block value0="0" value1="1" value2="475" value3="525" type="event" name="proxground"/>
+<block value0="0" value1="0" value2="0" value3="0" type="state" name="statefilter"/>
+<block value0="0" value1="250" type="action" name="move"/>
+</set>
+<set>
+<block value0="1" value1="0" value2="400" value3="450" type="event" name="proxground"/>
+<block value0="0" value1="0" value2="0" value3="0" type="state" name="statefilter"/>
+<block value0="200" value1="0" type="action" name="move"/>
+</set>
+<set>
+<block value0="0" value1="0" value2="0" value3="0" type="state" name="statefilter"/>
+</set>
+</program>
+</vplroot>
+</ThymioVisualProgramming>
+</toolsPlugins>
+</node>
+</network>

@@ -1,0 +1,122 @@
+<!DOCTYPE aesl-source>
+<network>
+<node nodeId="56768" name="thymio-II"># variables for state
+var state[4] = [0,0,0,0]
+var new_state[4] = [0,0,0,0]
+
+# variables for notes
+var notes[6]
+var durations[6]
+var note_index = 6
+var note_count = 6
+var wave[142]
+var i
+var wave_phase
+var wave_intensity
+
+# compute a sinus wave for sound
+for i in 0:141 do
+	wave_phase = (i-70)*468
+	call math.cos(wave_intensity, wave_phase)
+	wave[i] = wave_intensity/256
+end
+call sound.wave(wave)
+# reset outputs
+call sound.system(-1)
+call leds.top(0,0,0)
+call leds.bottom.left(0,0,0)
+call leds.bottom.right(0,0,0)
+call leds.circle(0,0,0,0,0,0,0,0)
+
+# subroutine to display the current state
+sub display_state
+	call leds.circle(0,state[1]*32,0,state[3]*32,0,state[2]*32,0,state[0]*32)
+
+# when a note is finished, play the next note
+onevent sound.finished
+	if note_index != note_count then
+		call sound.freq(notes[note_index], durations[note_index])
+		note_index += 1
+	end
+
+onevent prox
+	when prox.ground.delta[0] &lt;= 500 and prox.ground.delta[1] &lt;= 500 do
+		motor.left.target = 100
+		motor.right.target = 100
+		call leds.top(32,32,32)
+		emit pair_run 0
+	end
+
+	when prox.ground.delta[1] >= 525 do
+		motor.left.target = 0
+		motor.right.target = 250
+		emit pair_run 1
+	end
+
+	when prox.ground.delta[0] >= 450 do
+		motor.left.target = 200
+		motor.right.target = 0
+		emit pair_run 2
+	end
+
+	when prox.horizontal[2] >= 2000 do
+		motor.left.target = 0
+		motor.right.target = 0
+		call math.copy(notes[0:0], [524])
+		call math.copy(durations[0:0], [7])
+		note_index = 1
+		note_count = 1
+		call sound.freq(notes[0], durations[0])
+		call leds.top(32,0,0)
+		emit pair_run 3
+	end
+
+	when prox.horizontal[2] &lt;= 1000 do
+		motor.left.target = 150
+		motor.right.target = 150
+		call leds.top(32,32,32)
+		emit pair_run 4
+	end
+
+<toolsPlugins>
+<ThymioVisualProgramming>
+<vplroot xml-format-version="1">
+<program advanced_mode="1">
+<set>
+<block value0="2" value1="2" value2="500" value3="900" type="event" name="proxground"/>
+<block value0="0" value1="0" value2="0" value3="0" type="state" name="statefilter"/>
+<block value0="100" value1="100" type="action" name="move"/>
+<block value0="32" value1="32" value2="32" type="action" name="colortop"/>
+</set>
+<set>
+<block value0="0" value1="1" value2="475" value3="525" type="event" name="proxground"/>
+<block value0="0" value1="0" value2="0" value3="0" type="state" name="statefilter"/>
+<block value0="0" value1="250" type="action" name="move"/>
+</set>
+<set>
+<block value0="1" value1="0" value2="400" value3="450" type="event" name="proxground"/>
+<block value0="0" value1="0" value2="0" value3="0" type="state" name="statefilter"/>
+<block value0="200" value1="0" type="action" name="move"/>
+</set>
+<set>
+<block value0="0" value1="0" value2="1" value3="0" value4="0" value5="0" value6="0" value7="1000" type="event" value8="2000" name="prox"/>
+<block value0="0" value1="0" value2="0" value3="0" type="state" name="statefilter"/>
+<block value0="0" value1="0" type="action" name="move"/>
+<block value0="260" value1="517" value2="517" value3="517" value4="517" value5="517" type="action" name="sound"/>
+<block value0="32" value1="0" value2="0" type="action" name="colortop"/>
+</set>
+<set>
+<block value0="0" value1="0" value2="2" value3="0" value4="0" value5="0" value6="0" value7="1000" type="event" value8="2000" name="prox"/>
+<block value0="0" value1="0" value2="0" value3="0" type="state" name="statefilter"/>
+<block value0="150" value1="150" type="action" name="move"/>
+<block value0="32" value1="32" value2="32" type="action" name="colortop"/>
+</set>
+<set>
+<block value0="0" value1="0" value2="0" value3="0" type="state" name="statefilter"/>
+</set>
+</program>
+</vplroot>
+</ThymioVisualProgramming>
+</toolsPlugins>
+</node>
+</network>

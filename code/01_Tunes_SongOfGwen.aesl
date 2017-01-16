@@ -1,0 +1,123 @@
+<!DOCTYPE aesl-source>
+<network>
+<node nodeId="56768" name="thymio-II"># variables for state
+var state[4] = [0,0,0,0]
+var new_state[4] = [0,0,0,0]
+
+# variables for notes
+var notes[6]
+var durations[6]
+var note_index = 6
+var note_count = 6
+var wave[142]
+var i
+var wave_phase
+var wave_intensity
+
+# compute a sinus wave for sound
+for i in 0:141 do
+	wave_phase = (i-70)*468
+	call math.cos(wave_intensity, wave_phase)
+	wave[i] = wave_intensity/256
+end
+call sound.wave(wave)
+# stop timer 0
+timer.period[0] = 0
+# reset outputs
+call sound.system(-1)
+call leds.top(0,0,0)
+call leds.bottom.left(0,0,0)
+call leds.bottom.right(0,0,0)
+call leds.circle(0,0,0,0,0,0,0,0)
+
+# subroutine to display the current state
+sub display_state
+	call leds.circle(0,state[1]*32,0,state[3]*32,0,state[2]*32,0,state[0]*32)
+
+# when a note is finished, play the next note
+onevent sound.finished
+	if note_index != note_count then
+		call sound.freq(notes[note_index], durations[note_index])
+		note_index += 1
+	end
+
+onevent buttons
+	when button.center == 1 do
+		new_state[0] = 0
+		new_state[1] = 1
+		new_state[2] = 0
+		new_state[3] = 1
+		timer.period[0] = 1
+		emit pair_run 0
+	end
+
+	call math.copy(state, new_state)
+	callsub display_state
+
+
+onevent timer0
+	timer.period[0] = 0
+	if state[0] == 0 and state[1] == 1 and state[2] == 0 and state[3] == 0 then
+		new_state[0] = 0
+		new_state[1] = 1
+		new_state[2] = 0
+		new_state[3] = 1
+		timer.period[0] = 1250
+		call math.copy(notes[0:4], [440, 370, 311, 262, 440])
+		call math.copy(durations[0:4], [14, 14, 14, 14, 14])
+		note_index = 1
+		note_count = 5
+		call sound.freq(notes[0], durations[0])
+		emit pair_run 1
+	end
+
+	if state[0] == 0 and state[1] == 1 and state[2] == 0 and state[3] == 1 then
+		new_state[0] = 0
+		new_state[1] = 1
+		new_state[2] = 0
+		new_state[3] = 0
+		timer.period[0] = 1250
+		call math.copy(notes[0:5], [262, 262, 311, 370, 311, 524])
+		call math.copy(durations[0:5], [14, 14, 14, 14, 14, 14])
+		note_index = 1
+		note_count = 6
+		call sound.freq(notes[0], durations[0])
+		emit pair_run 2
+	end
+
+	call math.copy(state, new_state)
+	callsub display_state
+
+<toolsPlugins>
+<ThymioVisualProgramming>
+<vplroot xml-format-version="1">
+<program advanced_mode="1">
+<set>
+<block value0="0" value1="0" value2="0" value3="0" value4="1" value5="0" value6="0" type="event" name="button"/>
+<block value0="0" value1="0" value2="0" value3="0" type="state" name="statefilter"/>
+<block value0="2" value1="1" value2="2" value3="1" type="action" name="setstate"/>
+<block value0="1" type="action" name="timer"/>
+</set>
+<set>
+<block type="event" name="timeout"/>
+<block value0="2" value1="1" value2="2" value3="2" type="state" name="statefilter"/>
+<block value0="2" value1="1" value2="2" value3="1" type="action" name="setstate"/>
+<block value0="1250" type="action" name="timer"/>
+<block value0="515" value1="514" value2="513" value3="512" value4="515" value5="517" type="action" name="sound"/>
+</set>
+<set>
+<block type="event" name="timeout"/>
+<block value0="2" value1="1" value2="2" value3="1" type="state" name="statefilter"/>
+<block value0="2" value1="1" value2="2" value3="2" type="action" name="setstate"/>
+<block value0="1250" type="action" name="timer"/>
+<block value0="512" value1="512" value2="513" value3="514" value4="513" value5="516" type="action" name="sound"/>
+</set>
+<set>
+<block value0="0" value1="0" value2="0" value3="0" type="state" name="statefilter"/>
+</set>
+</program>
+</vplroot>
+</ThymioVisualProgramming>
+</toolsPlugins>
+</node>
+</network>

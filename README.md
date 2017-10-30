@@ -26,7 +26,11 @@ Prepare a custom SD card with files to make a playable instrument using these [i
 	*  Pink = obedient: control with direction buttons
 	*  Blue = attentive: listen to claps 1x, 2x and 3x claps yield different results
 
-## 01 Thymio tunes
+## 01 Thymio Theremin
+[<img src="https://s14-eu5.ixquick.com/cgi-bin/serveimage?url=https:%2F%2Fupload.wikimedia.org%2Fwikipedia%2Fcommons%2F7%2F74%2FLev_Termen_playing_-_cropped.jpg&sp=e61486185f0cbeed477827774bbcae44">](https://en.wikipedia.org/wiki/Theremin)
+
+[Léon Theremin Playing His Own Instrument](https://archive.org/details/LeonThereminPlayingHisOwnInstrument)
+
 Create an instrument using the `Thymio VPL` software, like so.
 Let them add extra actions on events.
 
@@ -106,4 +110,5 @@ Explain state machine with advanced mode and police siren.
 ## Resources
 
 [Intro Thymio video by Francesco Mondada](https://www.youtube.com/watch?v=QRyqZ0E5Ez0)
+
 

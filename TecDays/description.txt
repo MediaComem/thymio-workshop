@@ -1,0 +1,17 @@
+Vous avez toujours rêvé de pouvoir contrôler un robot, sans jamais savoir par où commencer ?
+
+Pas de problème, voici Thymio, un petit robot éducatif conçu pour faciliter
+la découverte de l’univers des machines et l’apprentissage de leur langage !
+
+Arts ou sciences, la robotique peut servir à concrétiser un nombre infini d’idées.
+Thymio sait presque tout faire : garçon de café, chien de garde, pinceau lumineux,
+musicien, ambulance, aspirateur ou bulldozer.
+
+Il peut même faire la conversation avec un collègue…
+A l’aide d’un mini-projet de programmation visuelle et
+textuelle nous allons comprendre l’impact et l’importance du code dans nos vies,
+et comment les humains s’en servent au quotidien pour explorer
+des modes d’interaction novateurs.
+
+Ce module est proposé par le Media Engineering Institute de la HEIG-VD,
+qui revisite l’atelier robot de son « Créa Code Club » pour l’occasion.
